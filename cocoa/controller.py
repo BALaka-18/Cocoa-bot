@@ -10,7 +10,7 @@ class Controller:
     def __init__(self, configsvc: ConfigService, scheduler: Scheduler):
         self.configsvc = configsvc
         self.schedulersvc = scheduler
-        self.prefix = envloader.config['prefix']
+        self.prefix = envloader.config.prefix
 
     async def handle_message(self, message: Message, client: Client):
         print(client, message)
@@ -33,7 +33,7 @@ class Controller:
         elif command == 'schedule new':
             await self.schedulersvc.schedule(author.id, channel, client),
         elif command == 'schedule cancel':
-            await self.schedulersvc.cancel(author.id, channel, client)
+            await self.schedulersvc.cancel(author.id, channel, client, author)
         elif command == 'list meetings':
             await self.schedulersvc.list_booked_meetings(author.id, channel)
         else:
